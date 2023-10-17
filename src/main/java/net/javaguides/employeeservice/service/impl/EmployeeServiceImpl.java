@@ -8,6 +8,12 @@ import net.javaguides.employeeservice.entity.Employee;
 import net.javaguides.employeeservice.repository.EmployeeRepository;
 import net.javaguides.employeeservice.service.APIClient;
 import net.javaguides.employeeservice.service.EmployeeService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private RestTemplate restTemplate;
    // private WebClient webClient;
     private APIClient apiClient;
+    
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -79,4 +88,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return apiResponseDto;
     }
+
+	@Override
+	public List<EmployeeDto> fetchAllEmployees() {	
+		List<EmployeeDto> lEmployee= new ArrayList<>();
+		List<Employee> listEmployee=employeeRepository.findAll();
+		for(Employee emp :listEmployee)
+		{
+			EmployeeDto empDto= mapper.map(emp,EmployeeDto.class);
+			lEmployee.add(empDto);
+		}
+		
+		return lEmployee;
+	}
 }

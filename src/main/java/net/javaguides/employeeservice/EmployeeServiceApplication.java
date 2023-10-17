@@ -1,5 +1,6 @@
 package net.javaguides.employeeservice;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -29,4 +30,9 @@ public class EmployeeServiceApplication {
 		SpringApplication.run(EmployeeServiceApplication.class, args);
 	}
 
+	public ModelMapper getModelMapper()
+	{
+		return new ModelMapper();
+	}
+	
 }
